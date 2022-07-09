@@ -55,26 +55,86 @@ Module({
 var gc=commands.filter(a=>"group"===a.use),lgc=commands.filter(a=>"logo"===a.use),tc=commands.filter(a=>"textmaker"===a.use),oc=commands.filter(a=>"owner"===a.use),dc=commands.filter(a=>"download"===a.use),ec=commands.filter(a=>"edit"===a.use),sc=commands.filter(a=>"search"===a.use),uc=commands.filter(a=>"utility"===a.use),setarr=[...gc,...dc,...tc,...oc,...ec,...sc,...uc]
 var gmsg="",ownmsg="",dlmsg="",utilmsg="",srmsg="",tms="",lms="",edmsg="";
 for (var i in setarr) {
-  var menu = `╭─⬣〘 ${BOT_INFO.split(";")[0]} 〙⬣──⊷❍
-│
-│
-│ Owner : ${BOT_INFO.split(";")[1]}
-│ User : ${message.senderName}
-│ Mode : ${MODE}
-│ Server : ${config.HEROKU.APP_NAME}
-│ Total RAM: ${total}
-│ Available RAM: ${used}
-│ Disk Space: 620 GB
-│ Version: ${config.VERSION}
-│
-│
-│  ▎▍▌▌▉▏▎▌▉▐▏▌▎
-│  ▎▍▌▌▉▏▎▌▉▐▏▌▎
-│  ${BOT_INFO.split(";")[0]}
-│ 
-│
-╰───────────────⊷❍`
-return await message.sendImageTemplate(await skbuffer(BOT_INFO.split(";")[3]),FancyRandom(menu),"Created By  "+BOT_INFO.split(";")[0],buttons);
+if (setarr[i].use === 'group') {
+  gmsg += `┃❉│ ${Math.floor(parseInt(i)+1)}. ${setarr[i].pattern.toString().match(/(\W*)([A-Za-zğüşıiöç1234567890 ]*)/)[2]} \n`
+}
+if (setarr[i].use === 'download') {
+  dlmsg += `┃❉│ ${Math.floor(parseInt(i)+1)}. ${setarr[i].pattern.toString().match(/(\W*)([A-Za-zğüşıiöç1234567890 ]*)/)[2]} \n`
+}
+if (setarr[i].use === 'textmaker') {
+  tms += `┃❉│ ${Math.floor(parseInt(i)+1)}. ${setarr[i].pattern.toString().match(/(\W*)([A-Za-zğüşıiöç1234567890 ]*)/)[2]} \n`
+}
+if (setarr[i].use === 'owner') {
+  ownmsg += `┃❉│ ${Math.floor(parseInt(i)+1)}. ${setarr[i].pattern.toString().match(/(\W*)([A-Za-zğüşıiöç1234567890 ]*)/)[2]} \n`
+}
+if (setarr[i].use === 'edit') {
+  edmsg += `┃❉│ ${Math.floor(parseInt(i)+1)}. ${setarr[i].pattern.toString().match(/(\W*)([A-Za-zğüşıiöç1234567890 ]*)/)[2]} \n`
+}
+if (setarr[i].use === 'search') {
+  srmsg += `┃❉│ ${Math.floor(parseInt(i)+1)}. ${setarr[i].pattern.toString().match(/(\W*)([A-Za-zğüşıiöç1234567890 ]*)/)[2]} \n`
+}
+if (setarr[i].use === 'utility') {
+  utilmsg += `┃❉│ ${Math.floor(parseInt(i)+1)}. ${setarr[i].pattern.toString().match(/(\W*)([A-Za-zğüşıiöç1234567890 ]*)/)[2]} \n`
+}
+}
+  var menu = `╭═══〘 ${BOT_INFO.split(";")[0]} 〙═══⊷❍
+┃❉╭──────────────
+┃❉│
+┃❉│ Owner : ${BOT_INFO.split(";")[1]}
+┃❉│ User : ${message.senderName}
+┃❉│ Mode : ${MODE}
+┃❉│ Server : ${config.HEROKU.APP_NAME}
+┃❉│ Total RAM: ${total}
+┃❉│ Available RAM: ${used}
+┃❉│ Disk Space: 620 GB
+┃❉│ Version: ${config.VERSION}
+┃❉│
+┃❉│
+┃❉│  ▎▍▌▌▉▏▎▌▉▐▏▌▎
+┃❉│  ▎▍▌▌▉▏▎▌▉▐▏▌▎
+┃❉│   ${BOT_INFO.split(";")[0]}
+┃❉│ 
+┃❉╰───────────────
+╰═════════════════⊷
+
+╭════〘 Group 〙════⊷❍
+┃❉╭─────────────────
+┃❉│ 
+${gmsg}
+┃❉╰─────────────────
+╰══════════════════⊷❍
+╭════〘 Download 〙════⊷❍
+┃❉╭─────────────────
+┃❉│ 
+${dlmsg}
+┃❉╰─────────────────
+╰══════════════════⊷❍
+╭════〘 Logo Maker 〙════⊷❍
+┃❉╭─────────────────
+┃❉│ 
+┃❉│ logo
+${tms}
+┃❉╰─────────────────
+╰══════════════════⊷❍
+╭════〘 Owner 〙════⊷❍
+┃❉╭─────────────────
+┃❉│ 
+${ownmsg}
+┃❉╰─────────────────
+╰══════════════════⊷❍
+╭════〘 Edit 〙════⊷❍
+┃❉╭─────────────────
+┃❉│ 
+${edmsg}
+┃❉╰─────────────────
+╰══════════════════⊷❍
+╭════〘 Search 〙════⊷❍
+┃❉╭─────────────────
+┃❉│ 
+${srmsg}
+┃❉╰─────────────────
+╰══════════════════⊷❍`
+return await message.sendImageTemplate(await skbuffer(BOT_INFO.split(";")[3]),FancyRandom(menu),"All rights reserved "+BOT_INFO.split(";")[0],buttons);
 }))
 Module({
   pattern: 'alive',
@@ -97,7 +157,7 @@ if (button) {
         text: FancyRandom('Ping!')
     })
     const end = new Date().getTime()
-    await message.sendReply(FancyRandom('Ping!\n ```' + (end - start) + '``` *ms*')) 
+    await message.sendReply(FancyRandom('Pong!\n ```' + (end - start) + '``` *ms*')) 
   }
   if (button.includes(myid)&&button.startsWith("support")) return await message.sendReply(BOT_INFO.split(";")[4])
 } 
